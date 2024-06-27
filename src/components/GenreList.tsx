@@ -6,9 +6,10 @@ import { Genre } from "../hooks/useGeners";
 
 interface Props{
     onSelectedGenre: (genre: Genre)=> void
+    selectedGenre: Genre | null
 }
 
-const GenreList = ({onSelectedGenre}: Props) => {
+const GenreList = ({onSelectedGenre, selectedGenre }: Props) => {
   const { data, isLoading, error } = useGenres();
   console.log("genre:", data);
   if (error) return null;
@@ -23,7 +24,7 @@ const GenreList = ({onSelectedGenre}: Props) => {
               borderRadius={8}
               boxSize="32px"
             />
-            <Button onClick={()=>onSelectedGenre(item)} fontSize="lg" variant='link'>{item.name}</Button>
+            <Button fontWeight={item.id===selectedGenre?.id? 'bold' : 'normal' } onClick={()=>onSelectedGenre(item)} fontSize="lg" variant='link'>{item.name}</Button>
           </HStack>
         </ListItem>
       ))}
