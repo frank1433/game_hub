@@ -6,10 +6,10 @@ import { Genre } from "../hooks/useGeners";
 
 interface Props{
     onSelectedGenre: (genre: Genre)=> void
-    selectedGenre: Genre | null
+    selectedGenreId?: number
 }
 
-const GenreList = ({onSelectedGenre, selectedGenre }: Props) => {
+const GenreList = ({onSelectedGenre, selectedGenreId}: Props) => {
   const { data, isLoading, error } = useGenres();
   console.log("genre:", data);
   if (error) return null;
@@ -18,7 +18,7 @@ const GenreList = ({onSelectedGenre, selectedGenre }: Props) => {
   <>
    <Heading fontSize='2xl' marginBottom={3}>Genres</Heading>
     <List>
-      {data.map((item) => (
+      {data?.results.map((item) => (
         <ListItem key={item.id} paddingY="5px">
           <HStack>
             <Image
@@ -27,7 +27,7 @@ const GenreList = ({onSelectedGenre, selectedGenre }: Props) => {
               objectFit='cover'
               boxSize="32px"
             />
-            <Button whiteSpace='normal'  textAlign='left' fontWeight={item.id===selectedGenre?.id? 'bold' : 'normal' } onClick={()=>onSelectedGenre(item)} fontSize="lg" variant='link'>{item.name}</Button>
+            <Button whiteSpace='normal'  textAlign='left' fontWeight={item.id===selectedGenreId? 'bold' : 'normal' } onClick={()=>onSelectedGenre(item)} fontSize="lg" variant='link'>{item.name}</Button>
           </HStack>
         </ListItem>
       ))}
